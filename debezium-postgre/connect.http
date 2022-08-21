@@ -1,0 +1,38 @@
+// @no-log
+DELETE localhost:8083/connectors/postgre-connector-test
+
+###
+// @no-log
+GET localhost:8083/connectors/
+
+###
+// @no-log
+POST localhost:8083/connectors
+Content-Type: application/json
+
+{
+  "name": "postgre-connector-test",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "tasks.max": "1",
+    "plugin.name": "pgoutput",
+    "database.hostname": "db",
+    "database.port": "5432",
+    "database.user": "postgres",
+    "database.password": "test",
+    "database.dbname": "postgres",
+    "database.server.name": "db",
+    "schema.include.list": "inventory",
+    "table.include.list": "inventory.customers, inventory.orders",
+    "database.history.kafka.bootstrap.servers": "broker:9092",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "topic.creation.default.replication.factor": 1,
+    "topic.creation.default.partitions": 1,
+    "topic.creation.default.compression.type": "lz4",
+    "poll.interval.ms": "10",
+    "slot.name": "testpgoutput",
+    "snapshot.mode": "initial",
+    "snapshot.locking.mode": "none"
+  }
+}

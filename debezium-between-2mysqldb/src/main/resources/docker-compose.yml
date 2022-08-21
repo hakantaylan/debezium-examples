@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  # Install Source MySQL DB and setup the Customer database
+  mysql-1:
+    container_name: source-database
+    image: mysql:8.0.25
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3305:3306"
+    volumes:
+      - "./customer.sql:/docker-entrypoint-initdb.d/customer.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: customerdb
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+
+  # Install Target MySQL DB and setup the Customer database
+  mysql-2:
+    container_name: target-database
+    image: mysql:8.0.25
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./customer.sql:/docker-entrypoint-initdb.d/customer.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: customerdb
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE

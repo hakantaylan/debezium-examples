@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group = 'it.vincenzocorso'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+    implementation group: 'org.apache.kafka', name: 'connect-json', version: '2.6.0'
+    implementation group: 'org.apache.kafka', name: 'connect-api', version: '2.6.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+}
+
+test {
+    useJUnitPlatform()
+}
