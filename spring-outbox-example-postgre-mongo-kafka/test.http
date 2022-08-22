@@ -1,0 +1,71 @@
+# curl -X POST http://localhost:9000/api/user
+#
+#  -H 'content-type: application/json'
+#
+#  -d '{
+#    "fullName": "Medium Demo",
+#    "email": "[medium.demos@gmail.com](mailto:medium.demos@gmail.com)",
+#    "mobileNumber": "+919876543214",
+#    "gender" : "Male"
+#}'
+// @no-log
+POST http://localhost:9000/api/user
+Content-Type: application/json
+
+{
+  "fullName": "Medium Demo",
+  "email": "[medium.demos@gmail.com](mailto:medium.demos@gmail.com)",
+  "mobileNumber": "+919876543214",
+  "gender": "Male"
+}
+
+
+###
+
+# curl --location --request PUT 'http://localhost:9000/api/user/subscribe'
+#
+#--header 'Content-Type: application/json'
+#--data-raw '{
+#    "userId": "a2beaf38-4569-44e6-8d37-bf54553f7b69",
+#    "subscriptions": [
+#        {
+#            "frequency": "Monthly",
+#            "newsLetter": "Top Brands"
+#        }
+#    ]
+#}'
+// @no-log
+PUT http://localhost:9000/api/user/subscribe
+Content-Type: application/json
+
+{
+  "userId": "08f60685-796f-4323-8767-8bcde983bc72",
+  "subscriptions": [
+    {
+      "frequency": "Monthly",
+      "newsLetter": "Top Brands"
+    }
+  ]
+}
+
+###
+
+# curl --location --request PUT 'http://localhost:9000/api/user/email/a2beaf38-4569-44e6-8d37-bf54553f7b69'
+#--header 'Content-Type: application/json'
+#--data-raw '{
+#    "email" : "medium.demo@medium.com"
+#}'
+// @no-log
+PUT http://localhost:9000/api/user/email/08f60685-796f-4323-8767-8bcde983bc72
+Content-Type: application/json
+
+{
+  "email": "medium.demo@medium.com"
+}
+
+###
+
+
+
+
+

@@ -1,0 +1,39 @@
+server:
+  port: 9001
+
+spring:
+  cloud:
+    function:
+      definition: consumeNewUserEvent;consumeEmailUpdatedEvent;consumeNewsLetterSubscriptionsEvent
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+#          auto-create-topics: true
+        streams:
+          bindings:
+            new_user:
+              consumer:
+                resetOffsets: true
+                startOffset: earliest
+      bindings:
+        consumeNewUserEvent-in-0:
+          destination: new_user
+          group: new_user-0
+        consumeEmailUpdatedEvent-in-0:
+          destination: email_changed
+          group: email_changed-0
+        consumeNewsLetterSubscriptionsEvent-in-0:
+          destination: news_letter_subscription
+          group: news_letter_subscription-0
+
+  data:
+    mongodb:
+#      uri: mongodb://root:admin@localhost:27017/user_db?authSource=admin
+      username: root
+      password: admin
+      database: user_db
+      port: 27017
+      host: localhost
+      authentication-database: admin
+      auto-index-creation: true
