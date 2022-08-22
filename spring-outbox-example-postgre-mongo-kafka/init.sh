@@ -42,7 +42,7 @@ curl -X POST  http://localhost:8083/connectors/ \
       "tombstones.on.delete": "false",
       "table.whitelist": "public.outbox",
       "transforms": "outbox",
-      "transforms.outbox.type": "com.eresh.outbox.OutboxTransformer"
+      "transforms.outbox.type": "com.example.outbox.OutboxTransformer"
    }
 }'
 echo -e "\n-------- Creating Outbox Kafka Connector For Debezium is Completed --------"

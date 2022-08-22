@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>com.eresh.outbox</groupId>
+    <groupId>com.example.outbox</groupId>
     <artifactId>spring-outbox-example-postgre-mongo-kafka</artifactId>
     <version>1.0</version>
     <relativePath>../pom.xml</relativePath>

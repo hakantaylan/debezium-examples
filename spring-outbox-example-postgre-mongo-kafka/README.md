@@ -53,7 +53,7 @@ Created topic email_changed.
 -------- Creation Kafka Topics email_changed Completed --------  
 -e  
 -------- Creating Outbox Kafka Connector For Debezium --------  
-{"name":"student-outbox-connector","config":{"connector.class":"io.debezium.connector.postgresql.PostgresConnector","tasks.max":"1","database.hostname":"postgres","database.port":"5432","database.user":"postgres","database.password":"postgres","database.dbname":"user_DB","database.server.name":"pg-outbox-server","tombstones.on.delete":"false","table.whitelist":"public.outbox","transforms":"outbox","transforms.outbox.type":"com.eresh.outbox.OutboxTransformer","name":"student-outbox-connector"},"tasks":[],"type":"source"}-e  
+{"name":"student-outbox-connector","config":{"connector.class":"io.debezium.connector.postgresql.PostgresConnector","tasks.max":"1","database.hostname":"postgres","database.port":"5432","database.user":"postgres","database.password":"postgres","database.dbname":"user_DB","database.server.name":"pg-outbox-server","tombstones.on.delete":"false","table.whitelist":"public.outbox","transforms":"outbox","transforms.outbox.type":"com.example.outbox.OutboxTransformer","name":"student-outbox-connector"},"tasks":[],"type":"source"}-e  
 -------- Creating Outbox Kafka Connector For Debezium is Completed --------
 ```
 We have done all infra setups. It’s time to start the services.
@@ -123,7 +123,7 @@ user_DB=# select * from outbox;
     "createdOn": {
         "$date": "2021-08-19T11:05:30.626Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 },
 {
     "_id": {
@@ -136,7 +136,7 @@ user_DB=# select * from outbox;
     "createdOn": {
         "$date": "2021-08-19T11:05:30.627Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 }
 ]
 ```
@@ -196,7 +196,7 @@ A new record is inserted in the document with the subscription details.
     "createdOn": {
         "$date": "2021-08-19T11:24:16.596Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 }
 ```
 **Use Case 3, Update email of the user**
@@ -299,7 +299,7 @@ user_DB=# select * from outbox;
     "createdOn": {
         "$date": "2021-08-19T11:05:30.626Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 },
 {
     "_id": {
@@ -312,7 +312,7 @@ user_DB=# select * from outbox;
     "createdOn": {
         "$date": "2021-08-19T11:05:30.627Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 },
 {
     "_id": {
@@ -325,7 +325,7 @@ user_DB=# select * from outbox;
     "createdOn": {
         "$date": "2021-08-19T11:24:16.596Z"
     },
-    "_class": "com.eresh.outbox.mongo.model.NewsLetterSubscription"
+    "_class": "com.example.outbox.mongo.model.NewsLetterSubscription"
 }
 ]
 ```
