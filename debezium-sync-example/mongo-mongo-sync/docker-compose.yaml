@@ -1,0 +1,96 @@
+version: "3.8"
+services:
+  zookeeper:
+    image: debezium/zookeeper:${DEBEZIUM_VERSION}
+#    networks:
+#      - kafkanet
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+  kafka:
+    image: debezium/kafka:${DEBEZIUM_VERSION}
+    ports:
+      - "9092:9092"
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+#    networks:
+#      - kafkanet
+#    healthcheck:
+#      test: [ "CMD", "nc", "-vz", "localhost", "9092" ]
+#      interval: 5s
+#      timeout: 30s
+#      retries: 10
+    depends_on:
+      zookeeper:
+        condition: service_started
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9100:9000"
+    environment:
+      - KAFKA_BROKERCONNECT=kafka:9092
+      - JVM_OPTS=-Xms128M -Xmx256M
+    depends_on:
+      kafka:
+        condition: service_started
+#    networks:
+#      - kafkanet
+
+  mongodb:
+    image: debezium/example-mongodb:${DEBEZIUM_VERSION}
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_USER=debezium
+      - MONGODB_PASSWORD=dbz
+#    networks:
+#      - mongonet
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/inventory --quiet
+      interval: 2s
+      timeout: 20s
+      retries: 10
+
+#  postgres:
+#    image: debezium/example-postgres:${DEBEZIUM_VERSION}
+#    ports:
+#      - '5432:5432'
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    healthcheck:
+#      test: "pg_isready -U postgres -d inventory"
+#      interval: 2s
+#      timeout: 20s
+#      retries: 10
+  connect:
+    image: debezium/connect-jdbc:${DEBEZIUM_VERSION}
+    build:
+      context: debezium-mongo
+    ports:
+      - "8083:8083"
+#    networks:
+#      - kafkanet
+#      - mongonet
+#      - postgrenet
+    environment:
+      - BOOTSTRAP_SERVERS=kafka:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_source_connect_statuses
+    depends_on:
+      kafka:
+        condition: service_started
+#      mongodb:
+#        condition: service_started
+
+#networks:
+#  kafkanet:
+#    driver: bridge
+#  mongonet:
+#    driver: bridge
+#  postgrenet:
+#    driver: bridge
